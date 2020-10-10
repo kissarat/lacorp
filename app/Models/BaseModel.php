@@ -10,9 +10,6 @@ abstract class BaseModel extends Model
 {
     use HasFactory, Notifiable;
 
-    public int $id;
-    public string $name;
-
     /**
      * The primary key associated with the table.
      *

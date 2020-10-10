@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
             return new Response([
                 'status' => 400,
                 'type' => 'ValidationException',
-                'message' => 'Validtion error',
+                'message' => 'Validation error',
                 'errors' => $exception->errors()
             ], 400);
         }

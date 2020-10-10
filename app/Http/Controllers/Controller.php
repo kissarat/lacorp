@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\BaseModel;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class Controller extends BaseController
@@ -24,6 +25,10 @@ abstract class Controller extends BaseController
         ]);
         $modelClass = static::getModelClass();
         if (empty($content['id'])) {
+            $model = $modelClass::where('name', $content['name'])->first();
+            if ($model) {
+                throw new ConflictHttpException("Model #$model->id has the same name");
+            }
             return $modelClass::create(['name' => $content['name']]);
         } else {
             $id = $modelClass::where('id', $content['id'])
@@ -42,12 +47,17 @@ abstract class Controller extends BaseController
 
     public function show($id)
     {
-        return static::getModelClass()::firstOrFail($id);
+        $model = static::getModelClass()::where('id', $id)->first();
+        if (!$model) {
+            throw new NotFoundHttpException("Model #$id not found");
+        }
+        return $model;
     }
 
     public function destroy($id)
     {
-        $model = static::getModelClass()::firstOrFail($id);
+        $model = $this->show($id);
         $model->delete();
+        return ['ok' => 1];
     }
 }
