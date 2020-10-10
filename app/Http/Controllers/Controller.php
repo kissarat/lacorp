@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use App\Models\BaseModel;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -36,7 +35,8 @@ abstract class Controller extends BaseController
             if ($id > 0) {
                 return $modelClass::find($id);
             }
-            throw new NotFoundHttpException("Model #" . $content['id'] . " not found");
+            $id = $content['id'];
+            throw new NotFoundHttpException("Model #$id not found");
         }
     }
 
