@@ -30,6 +30,8 @@ services:
 
   # MySQL Service
   lacorp-mysql:
+    volumes:
+        - lacorp-mysql-data:/var/lib/mysql
     image: mysql:5.7.22
     container_name: lacorp-mysql
     restart: unless-stopped
@@ -48,3 +50,7 @@ services:
 networks:
   lacorp-network:
     driver: bridge
+
+volumes:
+    lacorp-mysql-data:
+      driver: local
