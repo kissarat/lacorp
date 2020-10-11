@@ -14,7 +14,7 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    static abstract function getModelClass();
+    public static abstract function getModelClass();
 
     public function save(Request $request)
     {

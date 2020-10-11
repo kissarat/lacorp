@@ -30,4 +30,13 @@ abstract class BaseModel extends Model
      * @var int
      */
     protected $perPage = 100;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+    ];
 }

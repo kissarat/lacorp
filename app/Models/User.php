@@ -11,12 +11,19 @@ class User extends BaseModel
      */
     protected $table = 'user';
 
+
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Company users
      */
-    protected $fillable = [
-        'name',
-    ];
+    public function companies()
+    {
+        return $this
+            ->belongsToMany(
+                Company::class,
+                Company::UserRelationshipTable,
+                'user_id',
+                'company_id'
+            )
+            ->withTimestamps();
+    }
 }

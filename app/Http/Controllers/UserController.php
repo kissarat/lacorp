@@ -8,4 +8,8 @@ class UserController extends Controller {
     {
         return User::class;
     }
+
+    public function show(int $id): User {
+        return parent::show($id);
+    }
 }
